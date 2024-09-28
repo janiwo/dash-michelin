@@ -4,7 +4,7 @@ from decouple import config
 import os
 from typing import Optional
 
-import pandas as pd
+import geopandas as gpd
 
 
 @dataclass(frozen=True)
@@ -68,7 +68,7 @@ class MichelinColumns:
 
 @dataclass
 class MichelinData:
-    df: Optional[pd.DataFrame] = field(default=None)
+    df: Optional[gpd.GeoDataFrame] = field(default=None)
     columns: MichelinColumns = MichelinColumns()
     path: Optional[str] = os.path.join(config("DATA_VAULT_PATH"), "michelin.pkl")
 
@@ -78,7 +78,7 @@ class MichelinData:
 
             self.df = self.load_data(self.path)
 
-    def load_data(self, path: str) -> pd.DataFrame:
+    def load_data(self, path: str) -> gpd.GeoDataFrame:
 
         with open(path, "rb") as f:
             df = pickle.load(f)

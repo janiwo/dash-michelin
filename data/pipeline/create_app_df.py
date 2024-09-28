@@ -1,6 +1,7 @@
 from dataclasses import asdict
 
 import pandas as pd
+import geopandas as gpd
 from data.objects.michelin_data.michelin import MichelinData, MichelinExtrasColumns
 from data.objects.michelin_data.michelin_raw import MichelinDataRaw
 
@@ -20,6 +21,7 @@ class CreateAppDf:
         self._get_award_info(data=data)
         self._convert_cuisine_col(data=data)
         data.df = self._get_extras_cols(data=data)
+        data.df = self._convert_to_geopandas(data=data)
 
         return data
 
@@ -88,6 +90,19 @@ class CreateAppDf:
             )
 
         return pd.concat([df, extras_dummies], axis=1)
+
+    @staticmethod
+    def _convert_to_geopandas(data: MichelinData) -> gpd.GeoDataFrame:
+        df = data.df
+        cols = data.columns
+
+        return gpd.GeoDataFrame(
+            df,
+            geometry=gpd.points_from_xy(
+                df[cols.norm.longitude], df[cols.norm.latitude]
+            ),
+            crs="EPSG:4326",
+        )
 
 
 if __name__ == "__main__":
