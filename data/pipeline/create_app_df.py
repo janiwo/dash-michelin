@@ -42,7 +42,7 @@ class CreateAppDf:
 
         df[[cols.code.location_city, cols.code.location_country]] = df[
             cols.norm.location
-        ].str.split(",", expand=True)
+        ].str.split(", ", expand=True)
 
     @staticmethod
     def _get_price_info(data: MichelinData) -> None:
