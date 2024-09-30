@@ -4,9 +4,10 @@ import sys
 
 sys.path.append(sys.path[0] + "/..")
 from data.objects.michelin_data.michelin import MichelinData
+from dash import dcc
 
 
-def main_canvas():
+def main_canvas() -> px.scatter_map:
     michelin_data = MichelinData()
     df = michelin_data.df
     cols = michelin_data.columns
@@ -24,3 +25,10 @@ def main_canvas():
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
     fig.update_layout(coloraxis_showscale=False)
     return fig
+
+
+map_graph = dcc.Graph(
+    id="graph",
+    figure=main_canvas(),
+    style={"height": "93vh", "position": "relative"},
+)

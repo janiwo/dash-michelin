@@ -1,11 +1,13 @@
 from dash import html, dcc
-from main_canvas.main_canvas import main_canvas
+import dash_bootstrap_components as dbc
+from main_canvas.main_canvas import map_graph
 from components.navbar import navbar
-
+from components.buttons_overlay import buttons_overlay
 
 layout = html.Div(
     [
         navbar,
-        dcc.Graph(id="graph", figure=main_canvas(), style={"height": "93vh"}),
+        buttons_overlay,
+        map_graph,
     ]
 )
