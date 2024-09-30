@@ -12,7 +12,7 @@ def button(label: str) -> Button:
 
 
 buttons_overlay = html.Div(
-    children=[button("Filter")],
+    children=[button("Filter"), button("Dashbard"), button("List")],
     style={
         "position": "absolute",
         "top": "9vh",
