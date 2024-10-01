@@ -1,11 +1,13 @@
-import callbacks  # This imports the callbacks to register them with the app
+from callbacks import (
+    restaurant_profile,
+)  # This imports the callbacks to register them with the app
 import dash_bootstrap_components as dbc
 from dash import Dash
 from decouple import config
 from layouts.layout import layout
 
 # Initialize the Dash app
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc.icons.BOOTSTRAP])
 app.title = "Dash Michelin"
 server = app.server
 

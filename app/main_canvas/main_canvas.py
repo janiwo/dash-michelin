@@ -28,7 +28,7 @@ def main_canvas() -> px.scatter_map:
 
 
 map_graph = dcc.Graph(
-    id="graph",
+    id="graph-map",
     figure=main_canvas(),
     style={"height": "93vh", "position": "relative"},
 )

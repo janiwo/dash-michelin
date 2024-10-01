@@ -89,7 +89,12 @@ class CreateAppDf:
                 f"{len(missing_vals)} values missing in extras col definition: {', '.join(missing_vals)}"
             )
 
-        return pd.concat([df, extras_dummies], axis=1)
+        df = pd.concat([df, extras_dummies], axis=1)
+        df[cols.norm.facilities_and_services] = df[
+            cols.norm.facilities_and_services
+        ].str.split(",")
+
+        return df
 
     @staticmethod
     def _convert_to_geopandas(data: MichelinData) -> gpd.GeoDataFrame:
