@@ -5,7 +5,7 @@ from dash.exceptions import PreventUpdate
 @callback(
     Output("side-bar", "class_name"),
     Output("side-bar-visibility", "data"),
-    Input("list", "n_clicks"),
+    Input("btn-list", "n_clicks"),
     State("side-bar-visibility", "data"),
 )
 def open_side_bar(n_clicks, visible):
