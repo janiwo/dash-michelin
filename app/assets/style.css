@@ -1,0 +1,34 @@
+/* Button Overlay */
+.buttons-overlay {
+    position: absolute;
+    top: 9vh;
+    left: 80vw;
+    z-index: 1000;
+}
+
+/* Side Bar */
+.side-bar {
+    position: absolute;
+    top: 9vh;
+    left: 1vw;
+    z-index: 1000;
+}
+/* Initial hidden state */
+.slide {
+    overflow: hidden;
+    transition: transform 0.5s ease-in-out, max-height 0.5s ease-in-out;
+    /* max-height: 0; */
+    transform: translateX(-125%);
+}
+
+/* Visible state */
+.slide-in {
+    max-height: 500px;  /* Adjust this as per your card's height */
+    transform: translateX(0);
+}
+
+/* Hidden state */
+.slide-out {
+    max-height: 0;
+    transform: translateX(-125%);
+}
