@@ -4,6 +4,7 @@ from dash import html, get_asset_url
 from data.objects.michelin_data.michelin import MichelinData
 
 
+# TODO find a better location for this
 class RestaurantProfileModal:
 
     def __init__(self, data: MichelinData, restaurant_id: int) -> None:
