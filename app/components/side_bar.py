@@ -8,7 +8,17 @@ class SideBar:
 
     def render(self):
         return dbc.Card(
-            dbc.CardBody(children=self.children),
+            [
+                dbc.CardHeader(
+                    dbc.Button(
+                        "X",
+                        id=f"side-bar-close-{self.id}",
+                        color="light",
+                        style={"float": "right"},
+                    )
+                ),
+                dbc.CardBody(children=self.children),
+            ],
             id=self.id,
             class_name="side-bar slide",
         )

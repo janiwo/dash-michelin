@@ -10,6 +10,5 @@ restaurant_list = SideBar(
     children=SideBarList(
         data=data, restaurant_ids=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     ).render(),
-    id="side-bar",
+    id="restaurant-list",
 ).render()
-
