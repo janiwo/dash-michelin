@@ -13,12 +13,9 @@ class Button:
 
     def render(self) -> Button:
         return Button(
-            self.label,
-            id=self.id,
-            color=self.color,
-            className=self.className,
-            style=self.style,
+            self.label, id=self.id, color=self.color, className=self.className
         )
 
+    @staticmethod
     def clean_string(string: str) -> str:
         return string.lower().replace(" ", "-")
