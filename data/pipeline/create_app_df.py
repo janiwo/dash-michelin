@@ -51,6 +51,9 @@ class CreateAppDf:
 
         df[cols.code.price_currency] = df[cols.norm.price].str[0]
         df[cols.code.price_amount] = df[cols.norm.price].str.len()
+        # heuristic in the absence of info
+        df[cols.code.price_amount] = df[cols.code.price_amount].fillna(1)
+        df[cols.code.price_amount] = df[cols.code.price_amount].astype(int)
 
     @staticmethod
     def _get_award_info(data: MichelinData) -> None:
