@@ -8,7 +8,7 @@ from dash.exceptions import PreventUpdate
     Input("btn-list", "n_clicks"),
     State("side-bar-visibility", "data"),
 )
-def open_side_bar(n_clicks, visible):
+def toggle_restaurant_list(n_clicks, visible):
     if n_clicks is None:
         raise PreventUpdate
     class_name = "side-bar slide slide-in" if visible else "side-bar slide slide-out"

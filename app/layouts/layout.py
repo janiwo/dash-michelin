@@ -4,14 +4,14 @@ from layouts.navbar.navbar import navbar
 from layouts.buttons_overlay.buttons_overlay import buttons_overlay
 from layouts.map_graph.map_graph import map_graph
 from layouts.profile_modal.profile_modal import profile_modal
-from layouts.side_bar.side_bar import side_bar
+from layouts.restaurant_list.restaurant_list import restaurant_list
 
 layout = html.Div(
     [
         dcc.Store(id="side-bar-visibility", data=True),
         navbar,
         buttons_overlay,
-        side_bar,
+        restaurant_list,
         map_graph,
         profile_modal,
     ]

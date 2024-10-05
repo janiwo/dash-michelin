@@ -1,6 +1,6 @@
 from callbacks import (
     restaurant_profile,
-    side_bar,
+    restaurant_list,
 )  # This imports the callbacks to register them with the app
 import dash_bootstrap_components as dbc
 from dash import Dash

@@ -1,13 +1,13 @@
 from dash import html
 
-from components.button import Button
+from components.button import ButtonComponent
 
 
 buttons_overlay = html.Div(
     children=[
-        Button("Filter").render(),
-        Button("Dashboard").render(),
-        Button("List").render(),
+        ButtonComponent("Filter").render(),
+        ButtonComponent("Dashboard").render(),
+        ButtonComponent("List").render(),
     ],
     className="buttons-overlay",
 )

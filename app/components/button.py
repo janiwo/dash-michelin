@@ -1,15 +1,14 @@
 from dash_bootstrap_components import Button
 
 
-class Button:
+class ButtonComponent:
     def __init__(
         self, label: str, id: str = None, color: str = "light", className: str = "me-1"
     ):
         self.label = label
         self.id = id if id else "btn-" + self.clean_string(label)
         self.color = color
-        self.className = className
-        self.style = {"boxShadow": "2px 2px 5px rgba(0, 0, 0, 0.3)"}
+        self.className = f"button-component {className}"
 
     def render(self) -> Button:
         return Button(
