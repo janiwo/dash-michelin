@@ -36,6 +36,12 @@ class MichelinCodeColumns:
 
 
 @dataclass(frozen=True)
+class MichelinVisualizationColumns:
+    marker_size_map: str = "award_stars_marker_size"
+    award_stars_count_str: str = "award_stars_count_str"
+
+
+@dataclass(frozen=True)
 class MichelinExtrasColumns:
     has_air_conditioning: str = "Air conditioning"
     is_booking_essential: str = "Booking essential"
@@ -63,6 +69,7 @@ class MichelinExtrasColumns:
 class MichelinColumns:
     norm: MichelinNormalizedColumns = MichelinNormalizedColumns()
     code: MichelinCodeColumns = MichelinCodeColumns()
+    viz: MichelinVisualizationColumns = MichelinVisualizationColumns()
     extras: MichelinExtrasColumns = MichelinExtrasColumns()
 
 

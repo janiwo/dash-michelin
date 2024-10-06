@@ -10,11 +10,12 @@ class Colors:
     light_red_rgb: str = "rgb(254, 226, 226)"
 
     white: str = "#FFFFFF"
-    white_rgb: str = "rgb(255, 255, 255)"
-
     black: str = "#000000"
-    back_rgb: str = "rgb(0, 0, 0)"
 
     light_grey: str = "#D3D3D3"
+
+    gold: str = "#FFD700"
+    silver: str = "#C0C0C0"
+    bronze: str = "#CD7F32"
 
     transparent: str = "rgba(0,0,0,0)"

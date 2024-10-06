@@ -20,6 +20,7 @@ class CreateAppDf:
         self._get_price_info(data=data)
         self._get_award_info(data=data)
         self._convert_cuisine_col(data=data)
+        self._get_visualizations_cols(data=data)
         data.df = self._get_extras_cols(data=data)
         data.df = self._convert_to_geopandas(data=data)
 
@@ -68,13 +69,30 @@ class CreateAppDf:
         df[cols.code.award_has_stars] = df[cols.code.award_stars_count] > 0
 
     @staticmethod
-    def _convert_cuisine_col(data: MichelinData):
+    def _convert_cuisine_col(data: MichelinData) -> None:
         df = data.df
         cols = data.columns
 
         df[cols.norm.cuisine] = df[cols.norm.cuisine].str.split(", ")
         # restaurants without any cuisine should have empty list rather then nan
         df[cols.norm.cuisine] = df[cols.norm.cuisine].fillna("").apply(list)
+
+    @staticmethod
+    def _get_visualizations_cols(data: MichelinData) -> None:
+        # add helper columns that are useful for visualisations
+        df = data.df
+        cols = data.columns
+
+        df[cols.viz.award_stars_count_str] = df[cols.code.award_stars_count].astype(str)
+        marker_size_dict = {
+            0: 1,
+            1: 3,
+            2: 6,
+            3: 10,
+        }
+        df[cols.viz.marker_size_map] = df[cols.code.award_stars_count].apply(
+            lambda x: marker_size_dict[x]
+        )
 
     @staticmethod
     def _get_extras_cols(data: MichelinData) -> pd.DataFrame:
