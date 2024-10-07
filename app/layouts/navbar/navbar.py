@@ -6,5 +6,5 @@ navbar = dbc.NavbarSimple(
     brand_href="#",
     color="#BB2631",
     dark=True,
-    style={"height": "7vh"},
+    class_name="navbar",
 )
