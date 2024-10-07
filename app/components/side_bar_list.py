@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import html
+from dash import html, get_asset_url
 from data.objects.michelin_data.michelin import MichelinData
 import geopandas as gpd
 
@@ -21,13 +21,34 @@ class SideBarList:
                     [
                         html.Div(
                             [
-                                html.H5(item["name"], className="mb-1"),
-                                html.Small("Yay!", className="text-success"),
+                                html.H5(
+                                    item["name"],
+                                    className="mb-1",
+                                    style={
+                                        "display": "inline-block",
+                                        "paddingRight": 20,
+                                    },
+                                ),
+                                html.Div(
+                                    [
+                                        html.Img(
+                                            src="https://upload.wikimedia.org/wikipedia/commons/a/ad/MichelinStar.svg",
+                                            height="15px",
+                                        )
+                                        for _ in range(item["award_stars_count"])
+                                    ],
+                                    style={"display": "inline-block", "float": "right"},
+                                ),
                             ],
-                            className="d-flex w-100 justify-content-between",
+                            className="clearfix",
                         ),
-                        html.P(item["description"], className="mb-1"),
-                        # html.Small("Plus some small print.", className="text-muted"),
+                    ]
+                    + [
+                        html.Small(
+                            " - ".join(item["cuisine"]), className="mb-1 text-muted"
+                        ),
+                        html.Br(),
+                        html.Small(item["price"], className="mb-1 text-muted"),
                     ],
                     id=str(index),
                 )
