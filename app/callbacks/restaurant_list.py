@@ -1,4 +1,4 @@
-from dash import Input, Output, State, callback
+from dash import Input, Output, State, callback, ALL, ctx
 from dash.exceptions import PreventUpdate
 from assets.data import data
 from utilities.map_helpers import ViewPortHandler
@@ -37,6 +37,8 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
     prevent_initial_call="initial_duplicate",
 )
 def refresh_restaurant_list(n_clicks, viewport):
+    if n_clicks is None and viewport is None:
+        raise PreventUpdate
     df = data.df
 
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
@@ -48,12 +50,13 @@ def refresh_restaurant_list(n_clicks, viewport):
 
 @callback(
     Output("graph-map", "figure"),
-    Input("btn-filter", "n_clicks"),
+    Input({"type": "restaurant", "index": ALL}, "n_clicks"),
     State("graph-map", "figure"),
-    State("graph-map", "relayoutData"),
 )
-def refresh_map(n_clicks, figure, viewport):
-    if n_clicks is None:
+def fly_to_restaurant(n_clicks, figure):
+    trigger_id = ctx.triggered_id
+    if all(click is None for click in n_clicks) or trigger_id is None:
         raise PreventUpdate
-    figure["layout"]["map"]["center"] = dict(lat=52.52, lon=13.405)
+    coords = trigger_id["index"].split("-")
+    figure["layout"]["map"]["center"] = dict(lat=float(coords[0]), lon=float(coords[1]))
     return figure

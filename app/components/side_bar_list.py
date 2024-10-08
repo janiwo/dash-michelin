@@ -50,7 +50,10 @@ class SideBarList:
                         html.Br(),
                         html.Small(item["price"], className="mb-1 text-muted"),
                     ],
-                    id=str(index),
+                    id={
+                        "type": "restaurant",
+                        "index": f"{item["latitude"]}-{item["longitude"]}",
+                    },
                 )
                 for index, item in enumerate(self.df.to_dict("records"))
             ],
