@@ -44,3 +44,16 @@ def refresh_restaurant_list(n_clicks, viewport):
     )
     side_bar_list = SideBarList(data, restaurant_ids)
     return side_bar_list.render()
+
+
+@callback(
+    Output("graph-map", "figure"),
+    Input("btn-filter", "n_clicks"),
+    State("graph-map", "figure"),
+    State("graph-map", "relayoutData"),
+)
+def refresh_map(n_clicks, figure, viewport):
+    if n_clicks is None:
+        raise PreventUpdate
+    figure["layout"]["map"]["center"] = dict(lat=52.52, lon=13.405)
+    return figure
