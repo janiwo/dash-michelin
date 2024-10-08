@@ -23,8 +23,7 @@ from utilities.map_helpers import ViewPortHandler
     Output("fig-location", "figure"),
     Output("fig-cuisine", "figure"),
     Output("fig-stars-price", "figure"),
-    # TODO link this to the dashboard btn once it has an id
-    Input("btn-test", "n_clicks"),
+    Input("btn-dashboard", "n_clicks"),
     State("graph-map", "relayoutData"),
 )
 def open_dashboard(n_clicks, viewport):

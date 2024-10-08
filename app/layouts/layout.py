@@ -5,6 +5,7 @@ from layouts.buttons_overlay.buttons_overlay import buttons_overlay
 from layouts.map_graph.map_graph import map_graph
 from layouts.profile_modal.profile_modal import profile_modal
 from layouts.restaurant_list.restaurant_list import restaurant_list
+from layouts.dashboard.dashboard import dashboard
 
 layout = html.Div(
     [
@@ -14,5 +15,6 @@ layout = html.Div(
         restaurant_list,
         map_graph,
         profile_modal,
+        dashboard,
     ]
 )
