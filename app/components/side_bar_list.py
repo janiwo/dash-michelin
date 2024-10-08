@@ -60,7 +60,7 @@ class SideBarList:
     @staticmethod
     def _filter_df(df: gpd.GeoDataFrame, restaurant_ids: list[int]) -> gpd.GeoDataFrame:
 
-        return df.iloc[restaurant_ids, :]
+        return df[df.index.isin(restaurant_ids)]
 
     @staticmethod
     def clean_string(string: str) -> str:
