@@ -50,7 +50,10 @@ class SideBarList:
                         html.Br(),
                         html.Small(item["price"], className="mb-1 text-muted"),
                     ],
-                    id=str(index),
+                    id={
+                        "type": "restaurant",
+                        "index": f"{item["latitude"]}-{item["longitude"]}",
+                    },
                 )
                 for index, item in enumerate(self.df.to_dict("records"))
             ],
@@ -60,7 +63,7 @@ class SideBarList:
     @staticmethod
     def _filter_df(df: gpd.GeoDataFrame, restaurant_ids: list[int]) -> gpd.GeoDataFrame:
 
-        return df.iloc[restaurant_ids, :]
+        return df[df.index.isin(restaurant_ids)]
 
     @staticmethod
     def clean_string(string: str) -> str:
