@@ -59,4 +59,5 @@ def fly_to_restaurant(n_clicks, figure):
         raise PreventUpdate
     coords = trigger_id["index"].split("-")
     figure["layout"]["map"]["center"] = dict(lat=float(coords[0]), lon=float(coords[1]))
+    figure["layout"]["map"]["zoom"] = 13.5
     return figure
