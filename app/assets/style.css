@@ -42,3 +42,7 @@
     max-height: 89vh;
     transform: translateX(-125%);
 }
+
+.modebar{
+    display: none !important;
+}

@@ -13,7 +13,7 @@ from utilities.component_helpers.restaurant_profile_modal import RestaurantProfi
 def open_restaurant_profile(clickData):
     if clickData is None:
         raise PreventUpdate
-    restaurant_id = clickData["points"][0]["pointIndex"]
+    restaurant_id = clickData["points"][0]["customdata"][0]
     modal_body_children = RestaurantProfileModal(
         data=data, restaurant_id=restaurant_id
     ).create_modal_contents()

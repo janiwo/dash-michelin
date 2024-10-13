@@ -15,7 +15,7 @@ class CreateAppDf:
     def do(self) -> MichelinData:
 
         data = self._normalize_col_names(raw_data=self.raw_data)
-
+        self._get_id_col(data=data)
         self._get_location_info(data=data)
         self._get_price_info(data=data)
         self._get_award_info(data=data)
@@ -35,6 +35,13 @@ class CreateAppDf:
         }
 
         return MichelinData(df=raw_data.df.rename(columns=col_mapping))
+
+    @staticmethod
+    def _get_id_col(data: MichelinDataRaw) -> None:
+        df = data.df
+        cols = data.columns
+
+        df[cols.code.restaurant_id] = df.index
 
     @staticmethod
     def _get_location_info(data: MichelinData) -> None:
@@ -73,6 +80,10 @@ class CreateAppDf:
         df = data.df
         cols = data.columns
 
+        # remove ' Cuisine' from cuisine names, such as Modern Cuisine, Traditional Cuisine, etc.
+        # this gives more space in the chart
+        df[cols.norm.cuisine] = df[cols.norm.cuisine].str.replace(" Cuisine", "")
+
         df[cols.norm.cuisine] = df[cols.norm.cuisine].str.split(", ")
         # restaurants without any cuisine should have empty list rather then nan
         df[cols.norm.cuisine] = df[cols.norm.cuisine].fillna("").apply(list)
@@ -92,6 +103,10 @@ class CreateAppDf:
         }
         df[cols.viz.marker_size_map] = df[cols.code.award_stars_count].apply(
             lambda x: marker_size_dict[x]
+        )
+
+        df[cols.viz.award_stars_count_sign] = df[cols.code.award_stars_count].apply(
+            lambda x: f"({x*'☆'})" if x else ""
         )
 
     @staticmethod
@@ -114,6 +129,10 @@ class CreateAppDf:
         df[cols.norm.facilities_and_services] = df[
             cols.norm.facilities_and_services
         ].str.split(",")
+        # restaurants without any facilities and services should have empty list rather then nan
+        df[cols.norm.facilities_and_services] = (
+            df[cols.norm.facilities_and_services].fillna("").apply(list)
+        )
 
         return df
 
