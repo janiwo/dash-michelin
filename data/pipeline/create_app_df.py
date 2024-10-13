@@ -80,6 +80,10 @@ class CreateAppDf:
         df = data.df
         cols = data.columns
 
+        # remove ' Cuisine' from cuisine names, such as Modern Cuisine, Traditional Cuisine, etc.
+        # this gives more space in the chart
+        df[cols.norm.cuisine] = df[cols.norm.cuisine].str.replace(" Cuisine", "")
+
         df[cols.norm.cuisine] = df[cols.norm.cuisine].str.split(", ")
         # restaurants without any cuisine should have empty list rather then nan
         df[cols.norm.cuisine] = df[cols.norm.cuisine].fillna("").apply(list)
@@ -99,6 +103,10 @@ class CreateAppDf:
         }
         df[cols.viz.marker_size_map] = df[cols.code.award_stars_count].apply(
             lambda x: marker_size_dict[x]
+        )
+
+        df[cols.viz.award_stars_count_sign] = df[cols.code.award_stars_count].apply(
+            lambda x: f"({x*'☆'})" if x else ""
         )
 
     @staticmethod

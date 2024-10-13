@@ -2,20 +2,32 @@ import dash_bootstrap_components as dbc
 from components.dashboard_graph import dashboard_card
 
 
-graph_veggie = dashboard_card(header="Veggie Ratio", graph_id="fig-veggie", graph_vh=20)
+graph_veggie = dashboard_card(
+    header="Veggie Ratio",
+    graph_id="fig-veggie",
+    graph_vh=20,
+)
 graph_wheelchair = dashboard_card(
     header="Wheelchair Access Ratio", graph_id="fig-wheelchair", graph_vh=20
 )
-graph_view = dashboard_card(header="Great View Ratio", graph_id="fig-view", graph_vh=20)
+graph_view = dashboard_card(
+    header="Great View Ratio",
+    graph_id="fig-view",
+    graph_vh=20,
+)
 graph_wine = dashboard_card(
     header="Interesting Wine Ratio", graph_id="fig-wine", graph_vh=20
 )
 graph_locations = dashboard_card(
     header="Locations", graph_id="fig-location", graph_vh=50
 )
-graph_cuisines = dashboard_card(header="Cuisines", graph_id="fig-cuisine", graph_vh=50)
+graph_cuisines = dashboard_card(
+    header="Location x Cuisine",
+    graph_id="fig-cuisine",
+    graph_vh=50,
+)
 graph_stars_price = dashboard_card(
-    header="Price-Awards", graph_id="fig-stars-price", graph_vh=50
+    header="Price x Rating", graph_id="fig-stars-price", graph_vh=50
 )
 
 

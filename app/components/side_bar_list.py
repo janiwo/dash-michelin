@@ -52,7 +52,7 @@ class SideBarList:
                     ],
                     id={
                         "type": "restaurant",
-                        "index": f"{item["latitude"]}-{item["longitude"]}",
+                        "index": f'{item["latitude"]}-{item["longitude"]}',
                     },
                 )
                 for index, item in enumerate(self.df.to_dict("records"))

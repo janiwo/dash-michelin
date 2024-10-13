@@ -20,12 +20,22 @@ map_fig = px.scatter_map(
         "3": Colors.gold,
     },
     size_max=15,
-    custom_data=[cols.code.restaurant_id],
+    custom_data=[
+        cols.code.restaurant_id,
+        cols.norm.name,
+        cols.norm.location,
+        cols.viz.award_stars_count_sign,
+        cols.norm.price,
+    ],
     zoom=1,
     center=dict(lat=20, lon=0),
 )
 map_fig.update_traces(
     cluster=dict(enabled=True, color=Colors.light_grey, maxzoom=3),
+    hovertemplate="<b>%{customdata[1]} %{customdata[3]}</b><br>"
+    + "<i>%{customdata[2]}</i><br>"
+    + "%{customdata[4]}<br>"
+    + "<extra></extra>",
 )
 map_fig.update_layout(
     margin={"r": 0, "t": 0, "l": 0, "b": 0}, coloraxis_showscale=False, showlegend=False

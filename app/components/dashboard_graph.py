@@ -60,7 +60,7 @@ def donut_chart_with_kpi(df: pd.DataFrame, col_name: str, label: str) -> px.sunb
         },
     )
 
-    fig.update_layout(margin={"t": 0, "l": 0, "b": 0, "r": 0})
+    fig.update_layout(margin={"t": 0, "l": 0, "b": 0, "r": 0}, hovermode=False)
 
     return fig
 
@@ -121,14 +121,19 @@ def create_location_sunburst(df: pd.DataFrame) -> px.sunburst:
 
     df_locations_grouped = df.groupby(by=sunburst_cols).size().reset_index(name="count")
 
-    color_scale = n_colors(
-        Colors.michelin_red_rgb,
-        Colors.light_red_rgb,
-        len(df[sunburst_cols[0]].unique()),
-        colortype="rgb",
-    )
+    n_countries = len(df[sunburst_cols[0]].unique())
+    if n_countries > 1:
+        # n-colors only works if requested scale has more than one colour
+        color_scale = n_colors(
+            Colors.michelin_red_rgb,
+            Colors.light_red_rgb,
+            n_countries,
+            colortype="rgb",
+        )
+    else:
+        color_scale = [Colors.michelin_red_rgb, Colors.light_red_rgb]
 
-    return px.sunburst(
+    fig = px.sunburst(
         df_locations_grouped,
         path=sunburst_cols,
         values="count",
@@ -136,6 +141,14 @@ def create_location_sunburst(df: pd.DataFrame) -> px.sunburst:
         color=sunburst_cols[0],
         color_discrete_sequence=color_scale,
     )
+
+    fig.update_traces(
+        hovertemplate="<b>%{id}</b><br>Restaurants: <b>%{value}</b>",
+    )
+
+    fig.update_layout({"margin": {"t": 0, "l": 0, "b": 0, "r": 0}})
+
+    return fig
 
 
 def create_location_bar(df: pd.DataFrame) -> px.bar:
@@ -151,10 +164,16 @@ def create_location_bar(df: pd.DataFrame) -> px.bar:
             "yaxis_categoryorder": "total ascending",
             "plot_bgcolor": Colors.transparent,
             "paper_bgcolor": Colors.transparent,
-            # "margin": {"t": 0, "l": 0, "b": 0, "r": 0},
+            "margin": {"t": 0, "l": 0, "b": 0, "r": 0},
         }
     )
-    fig.update_traces(marker_color=Colors.michelin_red)
+    fig.update_traces(
+        marker_color=Colors.michelin_red,
+        hovertemplate="<b>%{y}</b><br>Resturants: <b>%{x}</b>",
+    )
+    fig.update_xaxes(
+        showgrid=True, gridwidth=1, gridcolor=Colors.light_grey, griddash="dash"
+    )
     return fig
 
 
@@ -193,6 +212,7 @@ def create_heatmap(df: pd.DataFrame) -> px.imshow:
             text=df.values,
             texttemplate="%{text}",
             colorscale=[(0, Colors.light_red), (1, Colors.michelin_red)],
+            hovertemplate="<b>%{y} x %{x}</b><br>Restaurants: <b>%{z}</b><extra></extra>",
         )
     )
 
@@ -202,9 +222,11 @@ def create_heatmap(df: pd.DataFrame) -> px.imshow:
             "yaxis_title": None,
             "plot_bgcolor": Colors.transparent,
             "paper_bgcolor": Colors.transparent,
-            "coloraxis_showscale": False,
+            "margin": {"t": 0, "l": 0, "b": 0, "r": 0},
         }
     )
+
+    fig.update_traces(showscale=False)
 
     return fig
 
