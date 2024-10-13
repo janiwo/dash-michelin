@@ -44,11 +44,16 @@ class RestaurantProfileModal:
                                 html.H1(self.filtered_df[self.columns.norm.name]),
                                 html.Div(
                                     [
-                                        # html.I(className="bi bi-geo-alt-fill"),
-                                        self.filtered_df[self.columns.norm.location],
+                                        html.B(
+                                            self.filtered_df[self.columns.norm.location]
+                                        ),
                                     ]
                                 ),
-                                html.Div([self.filtered_df[self.columns.norm.address]]),
+                                html.Div(
+                                    [
+                                        self.filtered_df[self.columns.norm.address],
+                                    ],
+                                ),
                                 html.Div(
                                     [
                                         self.filtered_df[self.columns.norm.price]
@@ -56,11 +61,18 @@ class RestaurantProfileModal:
                                         + ", ".join(
                                             self.filtered_df[self.columns.norm.cuisine]
                                         )
-                                    ]
+                                    ],
+                                    className="mb-2",
                                 ),
                                 html.Div(
                                     [
-                                        dbc.Badge(i, pill=True, className="me-1")
+                                        dbc.Badge(
+                                            i,
+                                            pill=True,
+                                            color="primary",
+                                            text_color="white",
+                                            class_name="me-1 mb-2 mt-1",
+                                        )
                                         for i in self.filtered_df[
                                             self.columns.norm.facilities_and_services
                                         ]
@@ -72,6 +84,7 @@ class RestaurantProfileModal:
                             ],
                         ),
                     ],
+                    class_name="mb-2",
                 ),
                 dbc.Row(
                     [

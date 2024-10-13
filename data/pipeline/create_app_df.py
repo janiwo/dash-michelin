@@ -15,7 +15,7 @@ class CreateAppDf:
     def do(self) -> MichelinData:
 
         data = self._normalize_col_names(raw_data=self.raw_data)
-
+        self._get_id_col(data=data)
         self._get_location_info(data=data)
         self._get_price_info(data=data)
         self._get_award_info(data=data)
@@ -35,6 +35,13 @@ class CreateAppDf:
         }
 
         return MichelinData(df=raw_data.df.rename(columns=col_mapping))
+
+    @staticmethod
+    def _get_id_col(data: MichelinDataRaw) -> None:
+        df = data.df
+        cols = data.columns
+
+        df[cols.code.restaurant_id] = df.index
 
     @staticmethod
     def _get_location_info(data: MichelinData) -> None:
@@ -114,6 +121,10 @@ class CreateAppDf:
         df[cols.norm.facilities_and_services] = df[
             cols.norm.facilities_and_services
         ].str.split(",")
+        # restaurants without any facilities and services should have empty list rather then nan
+        df[cols.norm.facilities_and_services] = (
+            df[cols.norm.facilities_and_services].fillna("").apply(list)
+        )
 
         return df
 

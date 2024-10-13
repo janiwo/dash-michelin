@@ -33,6 +33,7 @@ class MichelinCodeColumns:
     price_amount: str = "price_amount"
     award_stars_count: str = "award_stars_count"
     award_has_stars: str = "award_has_stars"
+    restaurant_id: str = "restaurant_id"
 
 
 @dataclass(frozen=True)
