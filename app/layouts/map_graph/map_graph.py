@@ -20,6 +20,7 @@ map_fig = px.scatter_map(
         "3": Colors.gold,
     },
     size_max=15,
+    custom_data=[cols.code.restaurant_id],
     zoom=1,
     center=dict(lat=20, lon=0),
 )
