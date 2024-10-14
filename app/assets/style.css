@@ -46,7 +46,7 @@
 /* Visible state */
 .slide-in2 {
     max-height: 90vh;  /* Adjust this as per your card's height */
-    transform: translateX(180%);
+    transform: translateX(225%);
 }
 
 /* Hidden state */
