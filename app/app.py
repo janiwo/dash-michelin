@@ -2,6 +2,7 @@ from callbacks import (
     restaurant_profile,
     restaurant_list,
     callbacks_dashboard,
+    filter_bar,
 )  # This imports the callbacks to register them with the app
 import dash_bootstrap_components as dbc
 from dash import Dash
