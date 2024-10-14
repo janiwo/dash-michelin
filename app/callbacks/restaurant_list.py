@@ -25,7 +25,9 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
         gs=df.geometry, ids_only=True
     )
     side_bar_list = RestaurantBarList(data, restaurant_ids)
-    class_name = "side-bar slide slide-in" if visible else "side-bar slide slide-out"
+    class_name = (
+        "side-bar slide slide-in" if not visible else "side-bar slide slide-out"
+    )
     visible = not visible
     return class_name, visible, side_bar_list.render()
 
