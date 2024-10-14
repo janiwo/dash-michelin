@@ -2,9 +2,10 @@ import dash_bootstrap_components as dbc
 
 
 class SideBar:
-    def __init__(self, children: dbc.ListGroupItem, id: str):
+    def __init__(self, children: dbc.ListGroupItem, id: str, action_button: str):
         self.children = children
         self.id = id
+        self.action_button = action_button
 
     def render(self):
         return dbc.Card(
@@ -12,8 +13,8 @@ class SideBar:
                 dbc.CardHeader(
                     children=[
                         dbc.Button(
-                            "Refresh",
-                            id=f"side-bar-refresh-{self.id}",
+                            self.action_button,
+                            id=f"side-bar-{self.action_button.lower()}-{self.id}",
                             color="light",
                             style={"float": "left"},
                         ),
