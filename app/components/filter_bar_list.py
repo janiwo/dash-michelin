@@ -5,11 +5,11 @@ from dash import html
 
 class FilterBarList:
     def __init__(
-        self, country_list: list, facilities_options: list, cuisine_options: list
+        self, country_list: list, facilities_options: list, awards_options: list
     ) -> None:
         self.country_list = country_list
         self.facilities_options = facilities_options
-        self.cuisine_options = cuisine_options
+        self.awards_options = awards_options
 
     def render(self) -> dbc.ListGroup:
         return dbc.ListGroup(
@@ -32,30 +32,8 @@ class FilterBarList:
                             [
                                 dbc.Label("Awards:", html_for="input-awards"),
                                 dcc.Dropdown(
-                                    [
-                                        "Selected Restaurants",
-                                        "Bib Gourmand",
-                                        "1 Star",
-                                        "2 Stars",
-                                        "3 Stars",
-                                    ],
+                                    self.awards_options,
                                     id="input-awards",
-                                    multi=True,
-                                ),
-                            ]
-                        ),
-                        html.Div(
-                            [
-                                dbc.Label("Cuisine:", html_for="input-cuisine"),
-                                dcc.Dropdown(
-                                    [
-                                        "Selected Restaurants",
-                                        "Bib Gourmand",
-                                        "1 Star",
-                                        "2 Stars",
-                                        "3 Stars",
-                                    ],
-                                    id="input-cuisine",
                                     multi=True,
                                 ),
                             ]
