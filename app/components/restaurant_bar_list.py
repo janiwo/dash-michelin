@@ -4,7 +4,7 @@ from data.objects.michelin_data.michelin import MichelinData
 import geopandas as gpd
 
 
-class SideBarList:
+class RestaurantBarList:
     def __init__(
         self,
         data: MichelinData,
@@ -52,7 +52,7 @@ class SideBarList:
                     ],
                     id={
                         "type": "restaurant",
-                        "index": f'{item["latitude"]}-{item["longitude"]}',
+                        "index": f"{item["latitude"]}-{item["longitude"]}",
                     },
                 )
                 for index, item in enumerate(self.df.to_dict("records"))

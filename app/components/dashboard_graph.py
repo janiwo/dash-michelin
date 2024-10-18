@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 from plotly.colors import n_colors
 
 from assets.colors import Colors
+from assets.filter_lists import stars_hierarchy
 from data.objects.michelin_data.michelin import MichelinColumns
 
 
@@ -291,15 +292,6 @@ def stars_price_chart(df: pd.DataFrame) -> px.imshow:
         values="count",
         aggfunc="count",
     )
-
-    # define hierarchy of stars to show them in correct order
-    stars_hierarchy = [
-        "Selected Restaurants",
-        "Bib Gourmand",
-        "1 Star",
-        "2 Stars",
-        "3 Stars",
-    ]
 
     # add missing columns and sort
     missing_cols = list(set(stars_hierarchy) - set(df_price_stars_pivot.columns))

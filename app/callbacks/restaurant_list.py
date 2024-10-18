@@ -2,7 +2,7 @@ from dash import Input, Output, State, callback, ALL, ctx
 from dash.exceptions import PreventUpdate
 from assets.data import data
 from utilities.map_helpers import ViewPortHandler
-from components.side_bar_list import SideBarList
+from components.restaurant_bar_list import RestaurantBarList
 
 
 @callback(
@@ -24,8 +24,10 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
         gs=df.geometry, ids_only=True
     )
-    side_bar_list = SideBarList(data, restaurant_ids)
-    class_name = "side-bar slide slide-in" if visible else "side-bar slide slide-out"
+    side_bar_list = RestaurantBarList(data, restaurant_ids)
+    class_name = (
+        "side-bar slide slide-in" if not visible else "side-bar slide slide-out"
+    )
     visible = not visible
     return class_name, visible, side_bar_list.render()
 
@@ -44,7 +46,7 @@ def refresh_restaurant_list(n_clicks, viewport):
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
         gs=df.geometry, ids_only=True
     )
-    side_bar_list = SideBarList(data, restaurant_ids)
+    side_bar_list = RestaurantBarList(data, restaurant_ids)
     return side_bar_list.render()
 
 
