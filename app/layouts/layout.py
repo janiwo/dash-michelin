@@ -7,11 +7,11 @@ from layouts.profile_modal.profile_modal import profile_modal
 from layouts.restaurant_bar.restaurant_bar import restaurant_bar
 from layouts.filter_bar.filter_bar import filter_bar
 from layouts.dashboard.dashboard import dashboard
+from layouts.variable_store.variable_store import variable_store
 
 layout = html.Div(
     [
-        dcc.Store(id="side-bar-visibility", data=False),
-        dcc.Store(id="filter-bar-visibility", data=False),
+        *variable_store,
         navbar,
         buttons_overlay,
         filter_bar,
