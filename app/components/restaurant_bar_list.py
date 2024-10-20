@@ -2,6 +2,7 @@ import dash_bootstrap_components as dbc
 from dash import html, get_asset_url
 from data.objects.michelin_data.michelin import MichelinData
 import geopandas as gpd
+from assets.img_links import img_link_michelin_star, img_link_michelin_green_star
 
 
 class RestaurantBarList:
@@ -32,7 +33,7 @@ class RestaurantBarList:
                                 html.Div(
                                     [
                                         html.Img(
-                                            src="https://upload.wikimedia.org/wikipedia/commons/a/ad/MichelinStar.svg",
+                                            src=img_link_michelin_star,
                                             height="15px",
                                         )
                                         for _ in range(item["award_stars_count"])
