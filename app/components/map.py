@@ -1,6 +1,5 @@
 from typing import Dict, List
 
-from shapely import Point
 import plotly.express as px
 
 from assets.colors import Colors
