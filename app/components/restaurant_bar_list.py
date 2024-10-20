@@ -1,5 +1,5 @@
 import dash_bootstrap_components as dbc
-from dash import html, get_asset_url
+from dash import html
 from data.objects.michelin_data.michelin import MichelinData
 import geopandas as gpd
 from assets.img_links import img_link_michelin_star, img_link_michelin_green_star
@@ -60,11 +60,32 @@ class RestaurantBarList:
                     ],
                     id={
                         "type": "restaurant",
-                        "index": f"{item['latitude']}-{item['longitude']}",
+                        "index": f"{item["restaurant_id"]}",
                     },
                     action=True,
                 )
                 for index, item in enumerate(self.df.to_dict("records"))
+            ]
+            + [
+                html.Div(
+                    dbc.ButtonGroup(
+                        [
+                            dbc.Button(
+                                "Previous",
+                                id="restaurant-list-previous",
+                                color="light",
+                                disabled=True,
+                            ),
+                            dbc.Button(
+                                "Next",
+                                id="restaurant-list-next",
+                                color="light",
+                            ),
+                        ],
+                        style={"width": "100%", "justifyContent": "center"},
+                    ),
+                    style={"textAlign": "center"},
+                )
             ],
             flush=True,
         )
