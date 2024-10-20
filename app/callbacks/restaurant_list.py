@@ -4,11 +4,14 @@ from assets.data import data
 from utilities.map_helpers import ViewPortHandler
 from components.restaurant_bar_list import RestaurantBarList
 
+restaurant_bar_list_length = 7
+
 
 @callback(
     Output("restaurant-list", "class_name"),
     Output("side-bar-visibility", "data"),
     Output("side-bar-body-restaurant-list", "children", allow_duplicate=True),
+    Output("page-number", "data", allow_duplicate=True),
     Input("btn-list", "n_clicks"),
     Input("side-bar-close-restaurant-list", "n_clicks"),
     State("side-bar-visibility", "data"),
@@ -20,20 +23,23 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
         raise PreventUpdate
 
     df = data.df
-
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
-        gs=df.geometry, ids_only=True
+        gs=df.geometry,
+        ids_only=True,
+        page_index=0,
+        page_length=restaurant_bar_list_length,
     )
     side_bar_list = RestaurantBarList(data, restaurant_ids)
     class_name = (
         "side-bar slide slide-in" if not visible else "side-bar slide slide-out"
     )
     visible = not visible
-    return class_name, visible, side_bar_list.render()
+    return class_name, visible, side_bar_list.render(), 0
 
 
 @callback(
     Output("side-bar-body-restaurant-list", "children", allow_duplicate=True),
+    Output("page-number", "data", allow_duplicate=True),
     Input("side-bar-refresh-restaurant-list", "n_clicks"),
     State("graph-map", "relayoutData"),
     prevent_initial_call="initial_duplicate",
@@ -44,10 +50,14 @@ def refresh_restaurant_list(n_clicks, viewport):
     df = data.df
 
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
-        gs=df.geometry, ids_only=True
+        gs=df.geometry,
+        ids_only=True,
+        page_index=0,
+        page_length=restaurant_bar_list_length,
     )
+
     side_bar_list = RestaurantBarList(data, restaurant_ids)
-    return side_bar_list.render()
+    return side_bar_list.render(), 0
 
 
 @callback(
@@ -63,3 +73,42 @@ def fly_to_restaurant(n_clicks, figure):
     figure["layout"]["map"]["center"] = dict(lat=float(coords[0]), lon=float(coords[1]))
     figure["layout"]["map"]["zoom"] = 13.5
     return figure
+
+
+@callback(
+    Output("page-number", "data"),
+    Input("restaurant-list-next", "n_clicks"),
+    Input("restaurant-list-previous", "n_clicks"),
+    State("page-number", "data"),
+)
+def update_page_number(next_button, prev_button, page_number):
+    if next_button is None and prev_button is None:
+        raise PreventUpdate
+    trigger_id = ctx.triggered_id
+    if trigger_id == "restaurant-list-next":
+        page_number += 1
+    else:
+        page_number -= 1
+    return page_number
+
+
+@callback(
+    Output("side-bar-body-restaurant-list", "children", allow_duplicate=True),
+    Output("restaurant-list-next", "disabled"),
+    Output("restaurant-list-previous", "disabled"),
+    Input("page-number", "data"),
+    State("graph-map", "relayoutData"),
+    prevent_initial_call=True,
+)
+def update_restaurant_list(page_number, viewport):
+    df = data.df
+    restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
+        gs=df.geometry,
+        ids_only=True,
+        page_index=page_number,
+        page_length=restaurant_bar_list_length,
+    )
+    side_bar_list = RestaurantBarList(data, restaurant_ids)
+    next_button_disable = len(restaurant_ids) < restaurant_bar_list_length
+    prev_button_disable = not page_number > 0
+    return side_bar_list.render(), next_button_disable, prev_button_disable

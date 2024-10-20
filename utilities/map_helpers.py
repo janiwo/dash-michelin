@@ -18,13 +18,20 @@ class ViewPortHandler:
         self.area = Polygon(viewport["map._derived"]["coordinates"])
 
     def get_coordinates_in_view(
-        self, gs: gpd.GeoSeries, ids_only: bool = True
+        self,
+        gs: gpd.GeoSeries,
+        ids_only: bool = True,
+        page_index=None,
+        page_length=None,
     ) -> List[int]:
 
         mask = gs.within(self.area)
         gs_filtered = gs[mask]
 
         if ids_only:
-            return gs_filtered.index
+            ids = gs_filtered.index
+            if page_index is not None and page_length is not None:
+                ids = ids[page_index * page_length : (page_index + 1) * page_length]
+            return ids
 
         return gs_filtered
