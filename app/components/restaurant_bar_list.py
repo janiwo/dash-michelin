@@ -52,7 +52,7 @@ class RestaurantBarList:
                     ],
                     id={
                         "type": "restaurant",
-                        "index": f"{item["latitude"]}-{item["longitude"]}",
+                        "index": f"{item["restaurant_id"]}",
                     },
                 )
                 for index, item in enumerate(self.df.to_dict("records"))

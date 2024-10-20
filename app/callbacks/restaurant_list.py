@@ -69,8 +69,8 @@ def fly_to_restaurant(n_clicks, figure):
     trigger_id = ctx.triggered_id
     if all(click is None for click in n_clicks) or trigger_id is None:
         raise PreventUpdate
-    coords = trigger_id["index"].split("-")
-    figure["layout"]["map"]["center"] = dict(lat=float(coords[0]), lon=float(coords[1]))
+    coords = data.df.iloc[int(trigger_id["index"])].geometry.coords[0]
+    figure["layout"]["map"]["center"] = dict(lat=float(coords[1]), lon=float(coords[0]))
     figure["layout"]["map"]["zoom"] = 13.5
     return figure
 
