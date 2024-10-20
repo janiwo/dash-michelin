@@ -109,6 +109,10 @@ class CreateAppDf:
             lambda x: f"({x*'☆'})" if x else ""
         )
 
+        df[cols.viz.award_stars_count_total] = (
+            df[cols.code.award_stars_count] + df[cols.norm.has_green_star]
+        )
+
     @staticmethod
     def _get_extras_cols(data: MichelinData) -> pd.DataFrame:
         df = data.df

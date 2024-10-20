@@ -41,6 +41,7 @@ class MichelinVisualizationColumns:
     marker_size_map: str = "award_stars_marker_size"
     award_stars_count_str: str = "award_stars_count_str"
     award_stars_count_sign: str = "award_stars_count_sign"
+    award_stars_count_total: str = "award_stars_count_total"
 
 
 @dataclass(frozen=True)
