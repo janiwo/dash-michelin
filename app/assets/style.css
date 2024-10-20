@@ -21,7 +21,7 @@
     top: 9vh;
     left: 1vw;
     z-index: 1000;
-    max-width: 30vw;
+    width: 30vw;
 }
 /* Initial hidden state */
 .slide {
@@ -47,7 +47,7 @@
 .slide-in2 {
     max-height: 90vh;  /* Adjust this as per your card's height */
     transform: translateX(0);
-    left: 21vw !important;
+    left: 32vw !important;
 }
 
 /* Hidden state */
