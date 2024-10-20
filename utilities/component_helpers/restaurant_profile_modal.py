@@ -2,6 +2,7 @@ import geopandas as gpd
 import dash_bootstrap_components as dbc
 from dash import html, get_asset_url
 from data.objects.michelin_data.michelin import MichelinData
+from assets.img_links import img_link_michelin_star, img_link_michelin_green_star
 
 
 # TODO find a better location for this
@@ -27,16 +28,14 @@ class RestaurantProfileModal:
                                     ]
                                     * [
                                         html.Img(
-                                            src=get_asset_url("MichelinStar.svg"),
-                                            # src="assets/MichelinStar.svg",
+                                            src=img_link_michelin_star,
                                             height="50px",
                                         )
                                     ]
                                     + self.filtered_df[self.columns.norm.has_green_star]
                                     * [
                                         html.Img(
-                                            src=get_asset_url("MichelinGreenStar.svg"),
-                                            # src="assets/MichelinGreenStar.svg",
+                                            src=img_link_michelin_green_star,
                                             height="50px",
                                         )
                                     ]

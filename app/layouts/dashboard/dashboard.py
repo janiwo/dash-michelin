@@ -68,4 +68,5 @@ dashboard = dbc.Modal(
     is_open=False,
     className="mw-100 p-5",
     id="modal-dashboard",
+    style={"max-height": "100vh", "overflow-y": "auto"},
 )

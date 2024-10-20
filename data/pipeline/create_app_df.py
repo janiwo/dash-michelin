@@ -23,6 +23,7 @@ class CreateAppDf:
         self._get_visualizations_cols(data=data)
         data.df = self._get_extras_cols(data=data)
         data.df = self._convert_to_geopandas(data=data)
+        self._sort_df(data=data)
 
         return data
 
@@ -109,6 +110,10 @@ class CreateAppDf:
             lambda x: f"({x*'☆'})" if x else ""
         )
 
+        df[cols.viz.award_stars_count_total] = (
+            df[cols.code.award_stars_count] + df[cols.norm.has_green_star]
+        )
+
     @staticmethod
     def _get_extras_cols(data: MichelinData) -> pd.DataFrame:
         df = data.df
@@ -147,6 +152,17 @@ class CreateAppDf:
                 df[cols.norm.longitude], df[cols.norm.latitude]
             ),
             crs="EPSG:4326",
+        )
+
+    @staticmethod
+    def _sort_df(data: MichelinData) -> None:
+        df = data.df
+        cols = data.columns
+
+        df.sort_values(
+            by=[cols.viz.award_stars_count_total, cols.code.award_stars_count],
+            ascending=[False, False],
+            inplace=True,
         )
 
 
