@@ -1,3 +1,4 @@
+from typing import Dict, List
 from dash import Input, Output, State, callback
 from dash.exceptions import PreventUpdate
 
@@ -25,28 +26,34 @@ from utilities.map_helpers import ViewPortHandler
     Output("fig-stars-price", "figure"),
     Input("btn-dashboard", "n_clicks"),
     State("graph-map", "relayoutData"),
+    State("store-restaurant-ids", "data"),
 )
-def open_dashboard(n_clicks, viewport):
+def open_dashboard(n_clicks: int, viewport: Dict, restaurant_ids: List[int]):
 
     if n_clicks is None:
         raise PreventUpdate
 
     df = data.df
+    cols = data.columns
 
-    restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
-        gs=df.geometry, ids_only=True
+    df_filtered = df[df[cols.code.restaurant_id].isin(restaurant_ids)]
+
+    restaurant_ids_in_view = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
+        gs=df_filtered.geometry, ids_only=True
     )
 
-    df_filtered = df[df.index.isin(restaurant_ids)]
+    df_dashboard = df_filtered[
+        df_filtered[cols.code.restaurant_id].isin(restaurant_ids_in_view)
+    ]
 
-    fig_veggie = veggie_ratio_chart(df=df_filtered)
-    fig_wheelchair = wheelchair_ratio_chart(df=df_filtered)
-    fig_view = view_ratio_chart(df=df_filtered)
-    fig_wine = wine_ratio_chart(df=df_filtered)
+    fig_veggie = veggie_ratio_chart(df=df_dashboard)
+    fig_wheelchair = wheelchair_ratio_chart(df=df_dashboard)
+    fig_view = view_ratio_chart(df=df_dashboard)
+    fig_wine = wine_ratio_chart(df=df_dashboard)
 
-    fig_locations = location_chart(df=df_filtered)
-    fig_cuisine = cuisine_chart(df=df_filtered)
-    fig_stars_price = stars_price_chart(df=df_filtered)
+    fig_locations = location_chart(df=df_dashboard)
+    fig_cuisine = cuisine_chart(df=df_dashboard)
+    fig_stars_price = stars_price_chart(df=df_dashboard)
 
     return (
         True,

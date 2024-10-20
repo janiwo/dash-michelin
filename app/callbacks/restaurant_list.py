@@ -16,9 +16,12 @@ restaurant_bar_list_length = 7
     Input("side-bar-close-restaurant-list", "n_clicks"),
     State("side-bar-visibility", "data"),
     State("graph-map", "relayoutData"),
+    State("store-restaurant-ids", "data"),
     prevent_initial_call="initial_duplicate",
 )
-def toggle_restaurant_list(list_button, close_button, visible, viewport):
+def toggle_restaurant_list(
+    list_button, close_button, visible, viewport, restaurant_ids
+):
     if list_button is None and close_button is None:
         raise PreventUpdate
 
@@ -29,7 +32,7 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
         page_index=0,
         page_length=restaurant_bar_list_length,
     )
-    side_bar_list = RestaurantBarList(data, restaurant_ids)
+    side_bar_list = RestaurantBarList(data, restaurant_ids_in_view)
     class_name = (
         "side-bar slide slide-in" if not visible else "side-bar slide slide-out"
     )
@@ -47,12 +50,16 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
     Output("page-number", "data", allow_duplicate=True),
     Input("side-bar-refresh-restaurant-list", "n_clicks"),
     State("graph-map", "relayoutData"),
+    State("store-restaurant-ids", "data"),
     prevent_initial_call="initial_duplicate",
 )
-def refresh_restaurant_list(n_clicks, viewport):
+def refresh_restaurant_list(n_clicks, viewport, restaurant_ids):
     if n_clicks is None and viewport is None:
         raise PreventUpdate
     df = data.df
+    cols = data.columns
+
+    df_filtered = df[df[cols.code.restaurant_id].isin(restaurant_ids)]
 
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
         gs=df.geometry,
