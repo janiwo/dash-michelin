@@ -31,12 +31,19 @@ class RestaurantBarList:
                                     },
                                 ),
                                 html.Div(
-                                    [
+                                    item["award_stars_count"]
+                                    * [
                                         html.Img(
                                             src=img_link_michelin_star,
                                             height="15px",
                                         )
-                                        for _ in range(item["award_stars_count"])
+                                    ]
+                                    + item["green_star"]
+                                    * [
+                                        html.Img(
+                                            src=img_link_michelin_green_star,
+                                            height="15px",
+                                        )
                                     ],
                                     style={"display": "inline-block", "float": "right"},
                                 ),
@@ -55,6 +62,7 @@ class RestaurantBarList:
                         "type": "restaurant",
                         "index": f"{item['latitude']}-{item['longitude']}",
                     },
+                    action=True,
                 )
                 for index, item in enumerate(self.df.to_dict("records"))
             ],
