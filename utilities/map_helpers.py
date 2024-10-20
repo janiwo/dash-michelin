@@ -8,6 +8,8 @@ class ViewPortHandler:
 
     def __init__(self, viewport: Dict) -> None:
 
+        # TODO handling if viewport is None (for whatever reason)
+
         self.center = Point(
             viewport["map.center"]["lon"],
             viewport["map.center"]["lat"],

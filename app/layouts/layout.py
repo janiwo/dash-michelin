@@ -19,5 +19,6 @@ layout = html.Div(
         map_graph,
         profile_modal,
         dashboard,
+        store,
     ]
 )
