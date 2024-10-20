@@ -1,4 +1,4 @@
-from dash import Input, Output, State, callback, ALL, ctx
+from dash import Input, Output, State, callback, ALL, ctx, no_update
 from dash.exceptions import PreventUpdate
 from assets.data import data
 from utilities.map_helpers import ViewPortHandler
@@ -34,6 +34,11 @@ def toggle_restaurant_list(list_button, close_button, visible, viewport):
         "side-bar slide slide-in" if not visible else "side-bar slide slide-out"
     )
     visible = not visible
+    if not visible and (
+        ctx.triggered_id == "btn-list"
+        or ctx.triggered_id == "side-bar-close-restaurant-list"
+    ):
+        return class_name, visible, no_update, no_update
     return class_name, visible, side_bar_list.render(), 0
 
 
