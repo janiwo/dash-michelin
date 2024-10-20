@@ -1,21 +1,26 @@
-from typing import List
+from typing import Dict, List
 from dash import Input, Output, State, callback
 import plotly.express as px
 from shapely import Point
 
-from app.components.map import create_map
+from components.map import create_map
+from utilities.map_helpers import ViewPortHandler
 
-callback(
+
+@callback(
     Output("graph-map", "figure", allow_duplicate=True),
     Input("store-restaurant-ids", "data"),
-    State("graph-map", "figure"),
+    State("graph-map", "relayoutData"),
     prevent_initial_call=True,
 )
+def update_map_markers(restaurant_ids: List[int], viewport: Dict) -> px.scatter_map:
+    print("Updating map")
+    viewport_handler = ViewPortHandler(viewport=viewport)
 
-
-def update_map_markers(restaurant_ids: List[int], fig) -> px.scatter_map:
-
-    # zoom default = 1
-    # center_default = dict(lat=20, lon=0)
-
-    return create_map(restaurant_ids=restaurant_ids, zoom=1, center=Point(0, 20))
+    new_map = create_map(
+        restaurant_ids=restaurant_ids,
+        zoom=viewport_handler.zoom,
+        center=viewport_handler.center,
+    )
+    print("Plotting new map")
+    return new_map

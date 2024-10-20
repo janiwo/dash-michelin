@@ -1,16 +1,20 @@
-from typing import List
+from typing import Dict, List
 
 from shapely import Point
 import plotly.express as px
 
-from app.assets.colors import Colors
-from app.assets.data import data
+from assets.colors import Colors
+from assets.data import data
 
 df = data.df
 cols = data.columns
 
 
-def create_map(restaurant_ids: List[int], zoom: int, center: Point) -> px.scatter_map:
+def create_map(
+    restaurant_ids: List[int],
+    zoom: int = 1,
+    center: Dict[str, float] = dict(lat=20, lon=0),
+) -> px.scatter_map:
 
     df_filtered = df[df[cols.code.restaurant_id].isin(restaurant_ids)]
 
@@ -34,12 +38,14 @@ def create_map(restaurant_ids: List[int], zoom: int, center: Point) -> px.scatte
             cols.viz.award_stars_count_sign,
             cols.norm.price,
         ],
-        zoom=zoom,  # 1
-        center=dict(lat=Point.y, lon=Point.x),  # dict(lat=20, lon=0)
+        zoom=zoom,
+        center=center,
     )
 
     map_fig.update_traces(
-        cluster=dict(enabled=True, color=Colors.light_grey, maxzoom=3),
+        # setting the cluster seems to have a negative effect on updating the map
+        # see: https://github.com/plotly/plotly.py/issues/3631#issuecomment-1408694360
+        # cluster=dict(enabled=True, color=Colors.light_grey, maxzoom=3),
         hovertemplate="<b>%{customdata[1]} %{customdata[3]}</b><br>"
         + "<i>%{customdata[2]}</i><br>"
         + "%{customdata[4]}<br>"

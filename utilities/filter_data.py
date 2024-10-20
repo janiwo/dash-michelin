@@ -37,18 +37,19 @@ class FilterData:
 
         if self.has_green_star_value:
 
-            df_filtered = df_filtered[df_filtered[cols.norm.has_green_star]]
+            df_filtered = df_filtered[df_filtered[cols.norm.has_green_star] == 1]
 
         if self.location_values:
 
             df_filtered = df_filtered[
-                df_filtered[cols.norm.location].isin(self.location_values)
+                df_filtered[cols.code.location_country].isin(self.location_values)
             ]
 
         if self.price_values:
 
             df_filtered = df_filtered[
-                df_filtered[cols.code.price_amount].isin(self.price_values)
+                (df_filtered[cols.code.price_amount] >= self.price_values[0])
+                & (df_filtered[cols.code.price_amount] <= self.price_values[1])
             ]
 
         if self.award_values:
@@ -61,7 +62,7 @@ class FilterData:
 
             for value in self.facility_values:
 
-                df_filtered = df_filtered[df_filtered[value]]
+                df_filtered = df_filtered[df_filtered[value] == 1]
 
         if self.cuisine_values:
 
