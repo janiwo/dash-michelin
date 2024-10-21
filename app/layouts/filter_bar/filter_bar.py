@@ -14,5 +14,5 @@ filter_bar = SideBar(
         stars_hierarchy,
     ).render(),
     id="filter-bar-list",
-    action_button="Filter",
+    action_button="Reset",
 ).render()

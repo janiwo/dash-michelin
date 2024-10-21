@@ -1,8 +1,13 @@
 from dash import Input, Output, State, callback, ALL, ctx, no_update
 from dash.exceptions import PreventUpdate
 from assets.data import data
+
+from assets.data import all_restaurant_ids
 from utilities.map_helpers import ViewPortHandler
 from components.restaurant_bar_list import RestaurantBarList
+
+from components.filter_bar_list import FilterBarList
+from assets.filter_lists import countries_list, facilities_and_services, stars_hierarchy
 
 restaurant_bar_list_length = 7
 
@@ -135,3 +140,21 @@ def update_restaurant_list(page_number, viewport, restaurant_ids):
     next_button_disable = len(restaurant_ids) < restaurant_bar_list_length
     prev_button_disable = not page_number > 0
     return side_bar_list.render(), next_button_disable, prev_button_disable
+
+
+@callback(
+    Output("side-bar-body-filter-bar-list", "children", allow_duplicate=True),
+    Output("store-restaurant-ids", "data"),
+    Input("side-bar-reset-filter-bar-list", "n_clicks"),
+    prevent_initial_call=True,
+)
+def reset_filter(n_clicks):
+    if n_clicks is None:
+        raise PreventUpdate
+    return (
+        FilterBarList(
+            countries_list,
+            facilities_and_services,
+            stars_hierarchy,
+        ).render(),
+    ), all_restaurant_ids

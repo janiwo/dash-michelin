@@ -7,13 +7,14 @@ from utilities.filter_data import FilterData
 
 
 @callback(
-    Output("store-restaurant-ids", "data"),
+    Output("store-restaurant-ids", "data", allow_duplicate=True),
     Input("side-bar-filter-filter-bar-list", "n_clicks"),
     State("input-location-country", "value"),
     State("input-awards", "value"),
     State("input-facilities-and-services", "value"),
     State("input-green-star", "value"),
     State("input-price-amount", "value"),
+    prevent_initial_call=True,
 )
 def apply_filters(
     n_clicks: bool,
