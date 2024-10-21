@@ -4,6 +4,7 @@ from callbacks import (
     callbacks_dashboard,
     callbacks_filter,
     callbacks_map,
+    callbacks_navbar,
     filter_bar,
 )  # This imports the callbacks to register them with the app
 import dash_bootstrap_components as dbc
