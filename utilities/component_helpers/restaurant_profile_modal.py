@@ -11,7 +11,7 @@ class RestaurantProfileModal:
     def __init__(self, data: MichelinData, restaurant_id: int) -> None:
 
         self.restaurant_id = restaurant_id
-        self.filtered_df = self._filter_df(df=data.df, restaurant_id=restaurant_id)
+        self.filtered_df = self._filter_df(data=data, restaurant_id=restaurant_id)
         self.columns = data.columns
 
     def create_modal_contents(self) -> html.Div:
@@ -124,9 +124,11 @@ class RestaurantProfileModal:
         )
 
     @staticmethod
-    def _filter_df(df: gpd.GeoDataFrame, restaurant_id: int) -> gpd.GeoDataFrame:
+    def _filter_df(data: MichelinData, restaurant_id: int) -> gpd.GeoDataFrame:
+        df = data.df
+        cols = data.columns
 
-        return df.iloc[restaurant_id, :]
+        return df.loc[restaurant_id, :]
 
 
 if __name__ == "__main__":

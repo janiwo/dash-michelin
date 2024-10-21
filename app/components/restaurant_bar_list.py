@@ -60,7 +60,7 @@ class RestaurantBarList:
                     ],
                     id={
                         "type": "restaurant",
-                        "index": f"{item["restaurant_id"]}",
+                        "index": f"{item['restaurant_id']}",
                     },
                     action=True,
                 )

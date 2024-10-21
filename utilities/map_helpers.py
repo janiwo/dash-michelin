@@ -19,7 +19,6 @@ class ViewPortHandler:
             self.area = Polygon(viewport["map._derived"]["coordinates"])
 
         except Exception as e:
-            print(str(e))
             self.center = dict(lat=20.0, lon=0.0)
             self.zoom = 1
             self.bearing = 0

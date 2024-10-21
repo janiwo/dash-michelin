@@ -16,7 +16,7 @@ def dashboard_card(header: str, graph_id: str, graph_vh: int) -> dbc.Card:
 
     return dbc.Card(
         [
-            dbc.CardHeader(header, class_name="bg-secondary text-white"),
+            dbc.CardHeader(header, class_name="bg-primary text-white"),
             dbc.CardBody(
                 [
                     dcc.Graph(id=graph_id, style={"height": f"{graph_vh}vh"}),
