@@ -15,57 +15,71 @@ class FilterBarList:
             [
                 dbc.ListGroupItem(
                     [
-                        html.Div(
-                            [
-                                dbc.Label(
-                                    "Countries:", html_for="input-location-country"
-                                ),
-                                dcc.Dropdown(
-                                    self.country_list,
-                                    id="input-location-country",
-                                    multi=True,
-                                ),
-                            ]
+                        dbc.Row(
+                            dbc.Col(
+                                [
+                                    dbc.Label(
+                                        "Countries:", html_for="input-location-country"
+                                    ),
+                                    dcc.Dropdown(
+                                        self.country_list,
+                                        id="input-location-country",
+                                        multi=True,
+                                    ),
+                                ]
+                            )
                         ),
-                        html.Div(
-                            [
-                                dbc.Label("Awards:", html_for="input-awards"),
-                                dcc.Dropdown(
-                                    self.awards_options,
-                                    id="input-awards",
-                                    multi=True,
-                                ),
-                            ]
+                        dbc.Row(
+                            dbc.Col(
+                                [
+                                    dbc.Label("Awards:", html_for="input-awards"),
+                                    dcc.Dropdown(
+                                        self.awards_options,
+                                        id="input-awards",
+                                        multi=True,
+                                    ),
+                                ]
+                            )
                         ),
-                        html.Div(
-                            [
-                                dbc.Label(
-                                    "Facilities and Services:",
-                                    html_for="input-facilities-and-services",
-                                ),
-                                dcc.Dropdown(
-                                    self.facilities_options,
-                                    id="input-facilities-and-services",
-                                    multi=True,
-                                ),
-                            ]
+                        dbc.Row(
+                            dbc.Col(
+                                [
+                                    dbc.Label(
+                                        "Facilities and Services:",
+                                        html_for="input-facilities-and-services",
+                                    ),
+                                    dcc.Dropdown(
+                                        self.facilities_options,
+                                        id="input-facilities-and-services",
+                                        multi=True,
+                                    ),
+                                ]
+                            )
                         ),
-                        html.Div(
-                            [
-                                dbc.Label("Green Star:", html_for="input-green-star"),
-                                dbc.Switch(
-                                    id="input-green-star",
-                                    value=False,
-                                ),
-                            ]
+                        dbc.Row(
+                            dbc.Col(
+                                [
+                                    dbc.Label(
+                                        "Green Star:",
+                                        html_for="input-green-star",
+                                    ),
+                                    dbc.Switch(
+                                        id="input-green-star",
+                                        value=False,
+                                    ),
+                                ],
+                                width=12,
+                            )
                         ),
-                        html.Div(
-                            [
-                                dbc.Label("Price:", html_for="input-price-amount"),
-                                dcc.RangeSlider(
-                                    1, 4, 1, value=[1, 4], id="input-price-amount"
-                                ),
-                            ]
+                        dbc.Row(
+                            dbc.Col(
+                                [
+                                    dbc.Label("Price:", html_for="input-price-amount"),
+                                    dcc.RangeSlider(
+                                        1, 4, 1, value=[1, 4], id="input-price-amount"
+                                    ),
+                                ]
+                            )
                         ),
                     ]
                     + [
