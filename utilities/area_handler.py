@@ -76,7 +76,6 @@ if __name__ == "__main__":
 
     df_point = df.copy()
     df_point = df_point.loc[contained_mask_point, :]
-    print(df_point[data.columns.norm.location].value_counts())
 
     line = LineString(coordinates=[[10.0, 53.55], [11.58, 48.13]])  # HH -> M
     geo_area_line = AreaHandler(geo_object=line, distance_m=10000)
@@ -85,4 +84,3 @@ if __name__ == "__main__":
 
     df_line = df.copy()
     df_line = df_line.loc[contained_mask_line, :]
-    print(df_line[data.columns.norm.location].value_counts())
