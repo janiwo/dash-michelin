@@ -68,23 +68,21 @@ class RestaurantBarList:
             ]
             + [
                 html.Div(
-                    dbc.ButtonGroup(
-                        [
-                            dbc.Button(
-                                "Previous",
-                                id="restaurant-list-previous",
-                                color="light",
-                                disabled=True,
-                            ),
-                            dbc.Button(
-                                "Next",
-                                id="restaurant-list-next",
-                                color="light",
-                            ),
-                        ],
-                        style={"width": "100%", "justifyContent": "center"},
-                    ),
-                    style={"textAlign": "center"},
+                    [
+                        dbc.Button(
+                            "Previous",
+                            id="restaurant-list-previous",
+                            color="light",
+                            disabled=True,
+                            style={"float": "left"},
+                        ),
+                        dbc.Button(
+                            "Next",
+                            id="restaurant-list-next",
+                            color="light",
+                            style={"float": "right"},
+                        ),
+                    ],
                 )
             ],
             flush=True,
