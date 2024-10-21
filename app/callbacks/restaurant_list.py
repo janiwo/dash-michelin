@@ -26,13 +26,15 @@ def toggle_restaurant_list(
         raise PreventUpdate
 
     df = data.df
+    cols = data.columns
+    df = df[df[cols.code.restaurant_id].isin(restaurant_ids)]
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
         gs=df.geometry,
         ids_only=True,
         page_index=0,
         page_length=restaurant_bar_list_length,
     )
-    side_bar_list = RestaurantBarList(data, restaurant_ids_in_view)
+    side_bar_list = RestaurantBarList(data, restaurant_ids)
     class_name = (
         "side-bar slide slide-in" if not visible else "side-bar slide slide-out"
     )
@@ -62,7 +64,7 @@ def refresh_restaurant_list(n_clicks, viewport, restaurant_ids):
     df_filtered = df[df[cols.code.restaurant_id].isin(restaurant_ids)]
 
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
-        gs=df.geometry,
+        gs=df_filtered.geometry,
         ids_only=True,
         page_index=0,
         page_length=restaurant_bar_list_length,
@@ -81,7 +83,13 @@ def fly_to_restaurant(n_clicks, figure):
     trigger_id = ctx.triggered_id
     if all(click is None for click in n_clicks) or trigger_id is None:
         raise PreventUpdate
-    coords = data.df.iloc[int(trigger_id["index"])].geometry.coords[0]
+    df = data.df
+    cols = data.columns
+    coords = (
+        df[df[cols.code.restaurant_id] == int(trigger_id["index"])]
+        .iloc[0]
+        .geometry.coords[0]
+    )
     figure["layout"]["map"]["center"] = dict(lat=float(coords[1]), lon=float(coords[0]))
     figure["layout"]["map"]["zoom"] = 13.5
     return figure
@@ -110,10 +118,13 @@ def update_page_number(next_button, prev_button, page_number):
     Output("restaurant-list-previous", "disabled"),
     Input("page-number", "data"),
     State("graph-map", "relayoutData"),
+    State("store-restaurant-ids", "data"),
     prevent_initial_call=True,
 )
-def update_restaurant_list(page_number, viewport):
+def update_restaurant_list(page_number, viewport, restaurant_ids):
     df = data.df
+    cols = data.columns
+    df = df[df[cols.code.restaurant_id].isin(restaurant_ids)]
     restaurant_ids = ViewPortHandler(viewport=viewport).get_coordinates_in_view(
         gs=df.geometry,
         ids_only=True,

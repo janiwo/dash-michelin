@@ -93,7 +93,7 @@ class RestaurantBarList:
     @staticmethod
     def _filter_df(df: gpd.GeoDataFrame, restaurant_ids: list[int]) -> gpd.GeoDataFrame:
 
-        return df[df.index.isin(restaurant_ids)]
+        return df[df["restaurant_id"].isin(restaurant_ids)]
 
     @staticmethod
     def clean_string(string: str) -> str:

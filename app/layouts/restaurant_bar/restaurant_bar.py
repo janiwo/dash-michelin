@@ -7,7 +7,7 @@ from components.side_bar import SideBar
 test_list = data.df.iloc[0:5, :].to_dict("records")
 
 restaurant_bar = SideBar(
-    children=None,
+    children=RestaurantBarList(data, []).render(),
     action_button="Refresh",
     id="restaurant-list",
 ).render()
