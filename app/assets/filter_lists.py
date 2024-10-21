@@ -1,3 +1,6 @@
+from assets.data import data
+
+
 stars_hierarchy = [
     "Selected Restaurants",
     "Bib Gourmand",
@@ -6,66 +9,7 @@ stars_hierarchy = [
     "3 Stars",
 ]
 
-countries_list = [
-    "Andorra",
-    "Argentina",
-    "Austria",
-    "Belgium",
-    "Brazil",
-    "Canada",
-    "China Mainland",
-    "Croatia",
-    "Czech Republic",
-    "Czechia",
-    "Denmark",
-    "Estonia",
-    "Finland",
-    "France",
-    "Germany",
-    "Greece",
-    "Hong Kong SAR China",
-    "Hungary",
-    "Iceland",
-    "Ireland",
-    "Italy",
-    "Japan",
-    "Latvia",
-    "Lithuania",
-    "Luxembourg",
-    "Malaysia",
-    "Malta",
-    "Mexico",
-    "Netherlands",
-    "Norway",
-    "Poland",
-    "Portugal",
-    "Serbia",
-    "Slovenia",
-    "South Korea",
-    "Spain",
-    "Sweden",
-    "Switzerland",
-    "Taiwan",
-    "Thailand",
-    "Türkiye",
-    "USA",
-    "United Kingdom",
-    "Vietnam",
-]
-
-facilities_and_services = [
-    "Air conditioning",
-    "Booking essential",
-    "Booking essential - dinner",
-    "Bring your own bottle",
-    "Brunch",
-    "Car park",
-    "Cash only",
-    "Cash only - lunch",
-    "Counter dining",
-    "Credit cards not accepted",
-    "Foreign credit cards not accepted",
-    "Garden or park",
-    "Great view",
-    "Interesting wine list",
-]
+countries_list = sorted(data.df[data.columns.code.location_country].dropna().unique())
+facilities_and_services = sorted(
+    data.df[data.columns.norm.facilities_and_services].explode().dropna().unique()
+)
