@@ -68,6 +68,21 @@ class FilterBarList:
                             ]
                         ),
                     ]
+                    + [
+                        html.Div(
+                            dbc.ButtonGroup(
+                                [
+                                    dbc.Button(
+                                        "Filter",
+                                        id="side-bar-filter-filter-bar-list",
+                                        color="danger",
+                                    )
+                                ],
+                                style={"justifyContent": "right"},
+                            ),
+                            style={"textAlign": "right"},
+                        ),
+                    ]
                 )
             ],
             flush=True,

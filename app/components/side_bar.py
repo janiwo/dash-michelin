@@ -15,7 +15,8 @@ class SideBar:
                         dbc.Button(
                             self.action_button,
                             id=f"side-bar-{self.action_button.lower()}-{self.id}",
-                            color="light",
+                            color="danger",
+                            outline=True,
                             style={"float": "left"},
                         ),
                         dbc.Button(
