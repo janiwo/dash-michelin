@@ -33,7 +33,7 @@ def apply_filters(
         location_values=location_country_values,
         price_values=price_values,
         award_values=award_values,
-        has_green_star_value=has_green_star_value,
+        has_green_star_value=bool(has_green_star_value),
         cuisine_values=None,
         facility_values=facility_values,
     )._get_filtered_ids()

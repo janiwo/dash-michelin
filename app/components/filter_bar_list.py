@@ -59,16 +59,24 @@ class FilterBarList:
                         dbc.Row(
                             dbc.Col(
                                 [
-                                    dbc.Label(
-                                        "Green Star:",
-                                        html_for="input-green-star",
-                                    ),
-                                    dbc.Switch(
+                                    # dbc.Label(
+                                    #     "Green Star:",
+                                    #     html_for="input-green-star",
+                                    # ),
+                                    # dbc.Switch(
+                                    #     id="input-green-star",
+                                    #     value=False,
+                                    # ),
+                                    dcc.Checklist(
+                                        options=[
+                                            {
+                                                "label": "Green Star only",
+                                                "value": 1,
+                                            }
+                                        ],
                                         id="input-green-star",
-                                        value=False,
                                     ),
                                 ],
-                                width=12,
                             )
                         ),
                         dbc.Row(
