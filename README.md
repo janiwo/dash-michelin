@@ -1,6 +1,6 @@
 # dash-michelin
 
-This project is our submission to the [Plotly Autumn App Challange](https://community.plotly.com/t/autumn-app-challenge/87373). The corresponding web app can be viewed [here](TBD).
+This project is our submission to the [Plotly Autumn App Challange](https://community.plotly.com/t/autumn-app-challenge/87373). The corresponding web app can be viewed [here](https://dolphin-app-2hxot.ondigitalocean.app/).
 
 ## Key Features
 
